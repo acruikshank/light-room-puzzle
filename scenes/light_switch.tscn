@@ -1,0 +1,36 @@
+[gd_scene load_steps=7 format=3 uid="uid://uapmktibqvg6"]
+
+[ext_resource type="Script" path="res://scripts/button.gd" id="1_gthhm"]
+[ext_resource type="Shader" path="res://materials/light_button.gdshader" id="2_kwlit"]
+[ext_resource type="Texture2D" uid="uid://b58cbwg0jdt5k" path="res://materials/Light Icon.png" id="2_sx0yo"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jbq27"]
+size = Vector3(0.2, 0.05, 0.2)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y3yef"]
+render_priority = 0
+shader = ExtResource("2_kwlit")
+shader_parameter/color = null
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5joi0"]
+transparency = 1
+albedo_color = Color(0.433266, 0.433266, 0.433266, 1)
+albedo_texture = ExtResource("2_sx0yo")
+
+[node name="Button" type="Node3D"]
+script = ExtResource("1_gthhm")
+
+[node name="Body" type="RigidBody3D" parent="."]
+freeze = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body"]
+shape = SubResource("BoxShape3D_jbq27")
+
+[node name="Mesh" type="CSGBox3D" parent="."]
+size = Vector3(0.485, 0.05, 0.485)
+material = SubResource("ShaderMaterial_y3yef")
+
+[node name="Mesh2" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.028, 0)
+size = Vector3(0.485, 0, 0.485)
+material = SubResource("StandardMaterial3D_5joi0")
