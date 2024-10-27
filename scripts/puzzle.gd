@@ -1,4 +1,4 @@
-extends CSGBox3D
+extends Node3D
 
 const BUTTON_SCALE = 1
 const BUTTON_Y_SCALE = 1.5
@@ -15,7 +15,7 @@ var countdown: float
 func _ready() -> void:
   for i in range(0, 5):
     for j in range(0, 5):
-      var button_scene = load("res://scenes/button.tscn")
+      var button_scene = load("res://scenes/interactive_button.tscn")
       var button = button_scene.instantiate()
       buttons[i].append(button)
       button.position = Vector3((i-2)*BUTTON_SPACING, BUTTON_Y, (j-2)*BUTTON_SPACING + BUTTON_Z_OFFSET)

@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://scripts/character_movement.gd" id="1_fkbkg"]
 [ext_resource type="Script" path="res://scripts/view_motion.gd" id="2_aq86i"]
 [ext_resource type="PackedScene" uid="uid://ys4y1aq8npvu" path="res://scenes/PanelB.tscn" id="2_ecehx"]
-[ext_resource type="Script" path="res://scripts/front_panel.gd" id="2_flp41"]
+[ext_resource type="Script" path="res://scripts/puzzle.gd" id="2_flp41"]
 [ext_resource type="PackedScene" uid="uid://ci5ewx2p5jj8" path="res://scenes/PanelA.tscn" id="3_24oqc"]
 [ext_resource type="PackedScene" uid="uid://uapmktibqvg6" path="res://scenes/light_switch.tscn" id="5_6g35o"]
 
@@ -62,13 +62,15 @@ transform = Transform3D(-4.5897e-08, 0, 1.05, 0, 1.05, 0, -1.05, 0, -4.5897e-08,
 [node name="PanelA-10" parent="Room/Front Panel" instance=ExtResource("3_24oqc")]
 transform = Transform3D(-4.5897e-08, 0, -1.05, 0, 1.05, 0, 1.05, 0, -4.5897e-08, -0.27, 0.248, -3.6)
 
-[node name="CSGBox3D" type="CSGBox3D" parent="Room/Front Panel"]
+[node name="Mesh" type="CSGBox3D" parent="Room/Front Panel"]
 size = Vector3(1.2, 0.5, 9.4)
 material = ExtResource("1_7ovgo")
-script = ExtResource("2_flp41")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Room/Front Panel"]
 shape = SubResource("BoxShape3D_6onyd")
+
+[node name="Puzzle" type="Node3D" parent="Room/Front Panel"]
+script = ExtResource("2_flp41")
 
 [node name="Floor" type="StaticBody3D" parent="Room"]
 

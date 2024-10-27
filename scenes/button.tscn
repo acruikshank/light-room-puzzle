@@ -1,10 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://33pdafjatw6d"]
+[gd_scene load_steps=4 format=3 uid="uid://33pdafjatw6d"]
 
 [ext_resource type="Shader" path="res://materials/light_button.gdshader" id="1_4m8a5"]
 [ext_resource type="Script" path="res://scripts/button.gd" id="2_iosjb"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_jbq27"]
-size = Vector3(0.2, 0.05, 0.2)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_y3yef"]
 render_priority = 0
@@ -13,12 +10,6 @@ shader_parameter/color = null
 
 [node name="Button" type="Node3D"]
 script = ExtResource("2_iosjb")
-
-[node name="Body" type="RigidBody3D" parent="."]
-freeze = true
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Body"]
-shape = SubResource("BoxShape3D_jbq27")
 
 [node name="Mesh" type="CSGBox3D" parent="."]
 size = Vector3(0.2, 0.05, 0.2)

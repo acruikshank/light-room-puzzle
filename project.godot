@@ -21,3 +21,10 @@ Pan={
 "deadzone": 0.5,
 "events": []
 }
+
+[layer_names]
+
+3d_render/layer_1="walls"
+3d_render/layer_2="buttons"
+3d_physics/layer_1="walls"
+3d_physics/layer_2="buttons"
