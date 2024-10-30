@@ -1,4 +1,7 @@
 extends Node3D
+class_name PanelC
+
+const light_color = Color(0.227, 0.715, 0.931)
 
 const flip_probability = 0.002
 const on_color = PuzzleColor.STD_BUTTON_ILLUMINATION
@@ -8,6 +11,17 @@ var a_buttons = []
 var a_buttons_on = false
 var b_buttons = []
 var b_buttons_on = false
+
+var light_on = false
+signal light_switch(on: bool)
+
+func _on_light_switch_pressed(i: int, j: int) -> void:
+  light_on = !light_on
+  light_switch.emit(light_on)
+  if light_on:
+    $LightSwitch.illuminate(PuzzleColor.color2vec(light_color))
+  else:
+    $LightSwitch.illuminate(Vector3(0,0,0))
 
 func assign(button: Node3D) -> void:
   if (randf() >= .5):
@@ -24,6 +38,8 @@ func _ready() -> void:
   assign($Button5)
   assign($Button6)
   assign($Button7)
+  assign($Button8)
+  assign($Button9)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

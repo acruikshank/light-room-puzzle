@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://ys4y1aq8npvu" path="res://scenes/PanelB.tscn" id="2_ecehx"]
 [ext_resource type="Script" path="res://scripts/puzzle.gd" id="2_flp41"]
 [ext_resource type="PackedScene" uid="uid://ci5ewx2p5jj8" path="res://scenes/PanelA.tscn" id="3_24oqc"]
-[ext_resource type="PackedScene" uid="uid://uapmktibqvg6" path="res://scenes/light_switch.tscn" id="5_6g35o"]
+[ext_resource type="PackedScene" uid="uid://dx7hflomfajvd" path="res://scenes/PanelC.tscn" id="5_w2whk"]
 [ext_resource type="Script" path="res://scripts/ui.gd" id="8_cpvlw"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6onyd"]
@@ -78,11 +78,6 @@ shape = SubResource("BoxShape3D_6onyd")
 
 [node name="Puzzle" type="Node3D" parent="Room/Front Panel"]
 script = ExtResource("2_flp41")
-color1 = Color(0.827084, 0.132371, 0.221982, 1)
-color2 = Color(0.97, 0.388, 0.194, 1)
-color3 = Color(0.163519, 0.641517, 0.216607, 1)
-color4 = Color(0, 0.43742, 0.746916, 1)
-color5 = Color(0.569972, 0.28799, 1, 1)
 
 [node name="Floor" type="StaticBody3D" parent="Room"]
 
@@ -280,8 +275,8 @@ transform = Transform3D(-4.5897e-08, 0, 1.05, 0, 1.05, 0, -1.05, 0, -4.5897e-08,
 [node name="PanelA-10" parent="Room/Right Panel" instance=ExtResource("3_24oqc")]
 transform = Transform3D(-4.5897e-08, 0, -1.05, 0, 1.05, 0, 1.05, 0, -4.5897e-08, -0.27, 0.248, -3.6)
 
-[node name="Light Switch" parent="Room/Right Panel" instance=ExtResource("5_6g35o")]
-transform = Transform3D(1, 8.9407e-08, 0, -8.9407e-08, 1, 0, -1.06581e-14, -5.32907e-15, 1, 0.27, 0.248, -3.7)
+[node name="LightSwitchPanel" parent="Room/Right Panel" instance=ExtResource("5_w2whk")]
+transform = Transform3D(-4.5897e-08, 0, -1.05, 0, 1.05, 0, 1.05, 0, -4.5897e-08, 0.28, 0.248, -3.6)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_ek1h0")
@@ -311,7 +306,7 @@ shadow_enabled = true
 omni_range = 8.47473
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.0317457, 0.862245, 0.505495, 0.84631, -0.245876, 0.472551, 0.531744, 0.442807, -0.721922, 1.197, 3.301, -12)
+transform = Transform3D(-0.0779694, 0.820371, 0.566491, 0.84631, -0.245876, 0.472551, 0.526953, 0.516271, -0.675118, 1.197, 3.301, -12)
 shadow_enabled = true
 directional_shadow_mode = 1
 directional_shadow_blend_splits = true
@@ -353,4 +348,5 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("CompressedTexture2D_ngodk")
 
+[connection signal="light_switch" from="Room/Right Panel/LightSwitchPanel" to="OmniLight3D" method="set_visible"]
 [connection signal="collision_result" from="CharacterBody3D/Head" to="UI" method="_on_action_available"]

@@ -1,0 +1,80 @@
+[gd_scene load_steps=10 format=3 uid="uid://dx7hflomfajvd"]
+
+[ext_resource type="Script" path="res://scripts/panel_c.gd" id="1_sooxj"]
+[ext_resource type="PackedScene" uid="uid://33pdafjatw6d" path="res://scenes/button.tscn" id="2_7utwl"]
+[ext_resource type="Script" path="res://scripts/button.gd" id="3_0ropi"]
+[ext_resource type="Script" path="res://scripts/button_collider.gd" id="4_twjvj"]
+[ext_resource type="Texture2D" uid="uid://c43aji7x68osk" path="res://materials/Light Icon.png" id="5_pux8i"]
+[ext_resource type="Shader" path="res://materials/light_button.gdshader" id="6_7bmek"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jbq27"]
+size = Vector3(0.1, 0.05, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y08vh"]
+transparency = 1
+albedo_texture = ExtResource("5_pux8i")
+emission_enabled = true
+emission = Color(0.347817, 0.347817, 0.347817, 1)
+uv1_scale = Vector3(1, 1, 0.4)
+uv1_offset = Vector3(-0.01, 0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y3yef"]
+render_priority = 0
+shader = ExtResource("6_7bmek")
+shader_parameter/color = null
+
+[node name="Node3D" type="Node3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.248, 0)
+script = ExtResource("1_sooxj")
+
+[node name="Button1" parent="." instance=ExtResource("2_7utwl")]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 1, -0.28, 0, -0.131)
+
+[node name="Button2" parent="." instance=ExtResource("2_7utwl")]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 1, -0.14, 0, -0.131)
+
+[node name="Button3" parent="." instance=ExtResource("2_7utwl")]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.131)
+
+[node name="Button4" parent="." instance=ExtResource("2_7utwl")]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 1, 0.14, 0, -0.131)
+
+[node name="Button5" parent="." instance=ExtResource("2_7utwl")]
+transform = Transform3D(0.499243, 0, 0, 0, 0.998487, 0, 0, 0, 0.998487, 0.28, 0, -0.131)
+
+[node name="Button6" parent="." instance=ExtResource("2_7utwl")]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 1, -0.28, 0, 0.131)
+
+[node name="Button7" parent="." instance=ExtResource("2_7utwl")]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 1, -0.14, 0, 0.131)
+
+[node name="Button8" parent="." instance=ExtResource("2_7utwl")]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 1, 0.14, 0, 0.131)
+
+[node name="Button9" parent="." instance=ExtResource("2_7utwl")]
+transform = Transform3D(0.499243, 0, 0, 0, 0.998487, 0, 0, 0, 0.998487, 0.28, 0, 0.131)
+
+[node name="LightSwitch" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.131)
+script = ExtResource("3_0ropi")
+
+[node name="Body" type="RigidBody3D" parent="LightSwitch"]
+collision_layer = 2
+collision_mask = 3
+freeze = true
+script = ExtResource("4_twjvj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LightSwitch/Body"]
+shape = SubResource("BoxShape3D_jbq27")
+
+[node name="Overlay" type="CSGBox3D" parent="LightSwitch"]
+material_override = SubResource("StandardMaterial3D_y08vh")
+size = Vector3(0.1, 0.05, 0.2)
+material = SubResource("ShaderMaterial_y3yef")
+
+[node name="Mesh" type="CSGBox3D" parent="LightSwitch"]
+size = Vector3(0.1, 0.05, 0.2)
+material = SubResource("ShaderMaterial_y3yef")
+
+[connection signal="pressed" from="LightSwitch" to="." method="_on_light_switch_pressed"]
+[connection signal="interaction" from="LightSwitch/Body" to="LightSwitch" method="interact"]

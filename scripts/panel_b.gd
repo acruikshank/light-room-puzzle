@@ -1,7 +1,7 @@
 extends Node3D
 
 const flip_probability = 0.002
-const on_color = Globals.STD_BUTTON_ILLUMINATION
+const on_color = PuzzleColor.STD_BUTTON_ILLUMINATION
 const off_color = Vector3(0.001,0,0)
 
 var buttons = []

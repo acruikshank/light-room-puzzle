@@ -1,11 +1,4 @@
-@tool
 extends Node3D
-
-@export_color_no_alpha var color1
-@export_color_no_alpha var color2
-@export_color_no_alpha var color3
-@export_color_no_alpha var color4
-@export_color_no_alpha var color5
 
 const BUTTON_SCALE = 1
 const BUTTON_Y_SCALE = 1.1
@@ -26,28 +19,22 @@ const PUZZLE_COLORS = [
   Color(0.57, 0.288, 1),
 ]
 
-func color2vec(c: Color) -> Vector3:
-  return Vector3(c.r, c.g, c.b)
-
-func vec2color(v: Vector3) -> Color:
-  return Color(v.x, v.y, v.z)
-
 var BRIGHT_COLORS = [
   Vector3(0,0,0),
-  color2vec(PUZZLE_COLORS[0]),
-  color2vec(PUZZLE_COLORS[1]),
-  color2vec(PUZZLE_COLORS[2]),
-  color2vec(PUZZLE_COLORS[3]),
-  color2vec(PUZZLE_COLORS[4])
+  PuzzleColor.color2vec(PUZZLE_COLORS[0]),
+  PuzzleColor.color2vec(PUZZLE_COLORS[1]),
+  PuzzleColor.color2vec(PUZZLE_COLORS[2]),
+  PuzzleColor.color2vec(PUZZLE_COLORS[3]),
+  PuzzleColor.color2vec(PUZZLE_COLORS[4])
 ]
 
 var DARK_COLORS = [
   Vector3(0,0,0),
-  color2vec(PUZZLE_COLORS[0].darkened(DARK_FACTOR)),
-  color2vec(PUZZLE_COLORS[1].darkened(DARK_FACTOR)),
-  color2vec(PUZZLE_COLORS[2].darkened(DARK_FACTOR)),
-  color2vec(PUZZLE_COLORS[3].darkened(DARK_FACTOR)),
-  color2vec(PUZZLE_COLORS[4].darkened(DARK_FACTOR))
+  PuzzleColor.color2vec(PUZZLE_COLORS[0].darkened(DARK_FACTOR)),
+  PuzzleColor.color2vec(PUZZLE_COLORS[1].darkened(DARK_FACTOR)),
+  PuzzleColor.color2vec(PUZZLE_COLORS[2].darkened(DARK_FACTOR)),
+  PuzzleColor.color2vec(PUZZLE_COLORS[3].darkened(DARK_FACTOR)),
+  PuzzleColor.color2vec(PUZZLE_COLORS[4].darkened(DARK_FACTOR))
 ]
 
 var buttons: Array[Array] = [[],[],[],[],[]]
@@ -103,7 +90,7 @@ func _ready() -> void:
       button.scale = Vector3(BUTTON_SCALE, BUTTON_Y_SCALE, BUTTON_SCALE)
       add_child(button)
 
-  countdown_buttons[0].illuminate(Globals.STD_BUTTON_ILLUMINATION)
+  countdown_buttons[0].illuminate(PuzzleColor.STD_BUTTON_ILLUMINATION)
   
 
 func _on_button_pressed(i: int, j: int) -> void:
@@ -129,7 +116,7 @@ func _on_countdown_button_pressed(i: int, j: int) -> void:
   
   for k in range(0, 5):
     if k <= countdown:
-      countdown_buttons[k].illuminate(Globals.STD_BUTTON_ILLUMINATION)
+      countdown_buttons[k].illuminate(PuzzleColor.STD_BUTTON_ILLUMINATION)
     else:
       countdown_buttons[k].illuminate(Vector3(0,0,0))
 
@@ -147,7 +134,7 @@ func _process(delta: float) -> void:
       timer = FLASH_DELAY
       check_state += 1
       return
-    var color = color2vec(vec2color(Globals.STD_BUTTON_ILLUMINATION)
+    var color = PuzzleColor.color2vec(PuzzleColor.vec2color(PuzzleColor.STD_BUTTON_ILLUMINATION)
       .darkened(1-(timer/FLASH_DELAY)**2))
     for i in range(0, 5):
       for j in range(0, 5):
@@ -159,6 +146,6 @@ func _process(delta: float) -> void:
           buttons[i][j].illuminate(BRIGHT_COLORS[current_state[i][j]])
         else:
           buttons[i][j].illuminate(DARK_COLORS[current_state[i][j]])
-    countdown_buttons[0].illuminate(Globals.STD_BUTTON_ILLUMINATION)
+    countdown_buttons[0].illuminate(PuzzleColor.STD_BUTTON_ILLUMINATION)
     countdown = 0
     check_state = 0

@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://scripts/button_collider.gd" id="2_txfdn"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jbq27"]
-size = Vector3(0.2, 0.05, 0.2)
+size = Vector3(0.1, 0.05, 0.2)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_y3yef"]
 render_priority = 0
