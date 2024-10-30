@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://g1y72mpko2d4"]
+[gd_scene load_steps=16 format=3 uid="uid://g1y72mpko2d4"]
 
 [ext_resource type="Material" uid="uid://bd07ubveb8y5l" path="res://materials/emmissive.tres" id="1_7ovgo"]
 [ext_resource type="Script" path="res://scripts/character_movement.gd" id="1_fkbkg"]
@@ -6,15 +6,23 @@
 [ext_resource type="PackedScene" uid="uid://ys4y1aq8npvu" path="res://scenes/PanelB.tscn" id="2_ecehx"]
 [ext_resource type="Script" path="res://scripts/puzzle.gd" id="2_flp41"]
 [ext_resource type="PackedScene" uid="uid://ci5ewx2p5jj8" path="res://scenes/PanelA.tscn" id="3_24oqc"]
+[ext_resource type="Texture2D" uid="uid://cpirrttd1lgl7" path="res://materials/Key.png" id="5_ley3o"]
 [ext_resource type="PackedScene" uid="uid://dx7hflomfajvd" path="res://scenes/PanelC.tscn" id="5_w2whk"]
 [ext_resource type="Script" path="res://scripts/ui.gd" id="8_cpvlw"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6onyd"]
 size = Vector3(1.1, 0.5, 9.4)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mcps7"]
+transparency = 1
+albedo_color = Color(0.781407, 0.781407, 0.781407, 1)
+albedo_texture = ExtResource("5_ley3o")
+metallic_specular = 0.0
+
 [sub_resource type="Environment" id="Environment_ek1h0"]
 background_mode = 1
 background_color = Color(0.0827414, 0.0827414, 0.0827414, 1)
+ambient_light_energy = 0.0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qixgw"]
 radius = 1.0
@@ -130,6 +138,11 @@ material = ExtResource("1_7ovgo")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Room/Back Wall"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.108887, -0.00915527, 0.0671997)
 shape = SubResource("BoxShape3D_6onyd")
+
+[node name="Key" type="CSGBox3D" parent="Room/Back Wall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.89264, 0, 3.69618)
+material_override = SubResource("StandardMaterial3D_mcps7")
+size = Vector3(1.5, 0.1, 1.5)
 
 [node name="Left Wall" type="StaticBody3D" parent="Room"]
 transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, 0.0225582, 2.278, 4.854)
