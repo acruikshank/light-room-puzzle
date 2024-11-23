@@ -2,3 +2,4 @@
 #* text=auto eol=lf
 
 *.wasm=binary
+*.pck=binary
