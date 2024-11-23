@@ -1,6 +1,6 @@
 extends Node3D
 
-const PAN_SPEED = .02
+const PAN_SPEED = .001
 const RAY_LENGTH = 1000
 
 signal collision_result(available: bool)
@@ -9,12 +9,12 @@ func _ready() -> void:
   Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 
 func _input(event: InputEvent) -> void:
-  if event.is_pressed() and event is InputEventMouseButton:
+  if event.is_released() and event is InputEventMouseButton:
     var collider = active_collider()
     if collider is ButtonCollider:
       collider.interact()
-  if event is InputEventPanGesture:
-    rotation += PAN_SPEED * Vector3(event.delta.y, 0, 0)
+  if event is InputEventMouseMotion:
+    rotation += PAN_SPEED * Vector3(-event.relative.y, 0, 0)
 
 func active_collider() -> RigidBody3D:
   var camera = $Camera

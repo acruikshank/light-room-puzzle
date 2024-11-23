@@ -12,11 +12,16 @@ const COUNTDOWN_OFFSET = -0.59
 const DARK_FACTOR = 0.75
 
 const PUZZLE_COLORS = [
-  Color(0.827, 0.132, 0.222),
-  Color(0.97, 0.388, 0.194),
-  Color(0.164, 0.642, 0.217),
-  Color(0, 0.437, 0.747),
-  Color(0.57, 0.288, 1),
+  Color(1.0, 0.0, 0.0),
+  Color(1.0, 0.3, 0.15),
+  Color(0, 1.0, 0),
+  Color(0 ,0, 1.0),
+  Color(0.4, 0.0, 1.0),
+  #Color(0.827, 0.132, 0.222),
+  #Color(0.97, 0.388, 0.194),
+  #Color(0.164, 0.642, 0.217),
+  #Color(0, 0.437, 0.747),
+  #Color(0.57, 0.288, 1),
 ]
 
 var BRIGHT_COLORS = [
@@ -39,6 +44,7 @@ var DARK_COLORS = [
 
 var buttons: Array[Array] = [[],[],[],[],[]]
 var countdown_buttons: Array[IlluminatedButton] = []
+signal num_correct_signal(correct: int)
 
 const FLASH_DELAY = .25
 var timer = FLASH_DELAY
@@ -60,6 +66,8 @@ var current_state = [
 ]
 
 var countdown = 0
+var puzzle_delta = 0
+var num_correct = 0
 
 const NOT_CHECKING = 0
 const CHECK_START = 1
@@ -86,7 +94,7 @@ func _ready() -> void:
       button.identify(i,j)
       button.pressed.connect(_on_button_pressed)
       buttons[i].append(button)
-      button.position = Vector3((i-2)*BUTTON_SPACING, BUTTON_Y, (j-2)*BUTTON_SPACING + BUTTON_Z_OFFSET)
+      button.position = Vector3((i-2)*BUTTON_SPACING, BUTTON_Y, (2-j)*BUTTON_SPACING + BUTTON_Z_OFFSET)
       button.scale = Vector3(BUTTON_SCALE, BUTTON_Y_SCALE, BUTTON_SCALE)
       add_child(button)
 
@@ -98,8 +106,18 @@ func _on_button_pressed(i: int, j: int) -> void:
     return
 
   current_state[i][j] = (current_state[i][j] + 1) % 6
-  buttons[i][j].illuminate(DARK_COLORS[current_state[i][j]])
+  buttons[i][j].illuminate(BRIGHT_COLORS[current_state[i][j]])
   _on_countdown_button_pressed(0,0)
+
+func _check_puzzle_state():
+  var next_num_correct = 0
+  for i in range(0, 5):
+    for j in range(0, 5):
+      if current_state[i][j] == SOLUTION[i][j]:
+        next_num_correct += 1
+  puzzle_delta = next_num_correct - num_correct
+  num_correct = next_num_correct
+  num_correct_signal.emit(num_correct)
 
 func _on_countdown_button_pressed(i: int, j: int) -> void:
   if check_state != NOT_CHECKING:
@@ -110,6 +128,7 @@ func _on_countdown_button_pressed(i: int, j: int) -> void:
   if countdown > 4:
     for k in range(0, 5):
       countdown_buttons[k].illuminate(Vector3(0,0,0))
+    _check_puzzle_state()
     timer = FLASH_DELAY
     check_state = 1
     return
@@ -134,18 +153,24 @@ func _process(delta: float) -> void:
       timer = FLASH_DELAY
       check_state += 1
       return
-    var color = PuzzleColor.color2vec(PuzzleColor.vec2color(PuzzleColor.STD_BUTTON_ILLUMINATION)
+    var base_color: Color
+    if puzzle_delta < 0:
+      base_color = Color.RED
+    elif puzzle_delta > 0:
+      base_color = Color.GREEN
+    else:
+      base_color = PuzzleColor.vec2color(PuzzleColor.STD_BUTTON_ILLUMINATION)
+
+    var color = PuzzleColor.color2vec(base_color
       .darkened(1-(timer/FLASH_DELAY)**2))
     for i in range(0, 5):
       for j in range(0, 5):
         buttons[i][j].illuminate(color)
   elif check_state == CHECK_DONE:
+    var num_correct = 0
     for i in range(0, 5):
       for j in range(0, 5):
-        if current_state[i][j] == SOLUTION[i][j]:
-          buttons[i][j].illuminate(BRIGHT_COLORS[current_state[i][j]])
-        else:
-          buttons[i][j].illuminate(DARK_COLORS[current_state[i][j]])
+        buttons[i][j].illuminate(BRIGHT_COLORS[current_state[i][j]])
     countdown_buttons[0].illuminate(PuzzleColor.STD_BUTTON_ILLUMINATION)
     countdown = 0
     check_state = 0

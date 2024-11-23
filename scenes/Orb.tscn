@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bh3j8hvg33vok"]
+
+[ext_resource type="Script" path="res://scripts/sphere.gd" id="1_ns25v"]
+[ext_resource type="Material" uid="uid://cove0wooysfph" path="res://materials/sphere_material.tres" id="2_dr7j3"]
+
+[node name="Orb" type="Node3D"]
+script = ExtResource("1_ns25v")
+
+[node name="Mesh" type="CSGSphere3D" parent="."]
+radius = 2.0
+radial_segments = 24
+rings = 12
+material = ExtResource("2_dr7j3")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://g1y72mpko2d4"]
+[gd_scene load_steps=17 format=3 uid="uid://g1y72mpko2d4"]
 
 [ext_resource type="Material" uid="uid://bd07ubveb8y5l" path="res://materials/emmissive.tres" id="1_7ovgo"]
 [ext_resource type="Script" path="res://scripts/character_movement.gd" id="1_fkbkg"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cpirrttd1lgl7" path="res://materials/Key.png" id="5_ley3o"]
 [ext_resource type="PackedScene" uid="uid://dx7hflomfajvd" path="res://scenes/PanelC.tscn" id="5_w2whk"]
 [ext_resource type="Script" path="res://scripts/ui.gd" id="8_cpvlw"]
+[ext_resource type="Script" path="res://scripts/sphere_control.gd" id="10_emw8n"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6onyd"]
 size = Vector3(1.1, 0.5, 9.4)
@@ -18,10 +19,11 @@ transparency = 1
 albedo_color = Color(0.781407, 0.781407, 0.781407, 1)
 albedo_texture = ExtResource("5_ley3o")
 metallic_specular = 0.0
+uv1_scale = Vector3(-1, 1, 1)
 
 [sub_resource type="Environment" id="Environment_ek1h0"]
 background_mode = 1
-background_color = Color(0.0827414, 0.0827414, 0.0827414, 1)
+background_color = Color(0.03, 0.03, 0.03, 1)
 ambient_light_energy = 0.0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qixgw"]
@@ -312,7 +314,7 @@ fov = 50.0
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(-0.581565, 0.713203, 0.391309, 0.812874, 0.490612, 0.313903, 0.0318961, 0.50064, -0.865068, 0.504, 7, 0.448)
 visible = false
-light_color = Color(0.940489, 0.880556, 0.78332, 1)
+light_color = Color(0.94, 0.900363, 0.8366, 1)
 light_energy = 2.08
 light_specular = 2.116
 shadow_enabled = true
@@ -361,5 +363,9 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("CompressedTexture2D_ngodk")
 
+[node name="SphereControl" type="Node3D" parent="."]
+script = ExtResource("10_emw8n")
+
+[connection signal="num_correct_signal" from="Room/Front Panel/Puzzle" to="SphereControl" method="set_num_correct"]
 [connection signal="light_switch" from="Room/Right Panel/LightSwitchPanel" to="OmniLight3D" method="set_visible"]
 [connection signal="collision_result" from="CharacterBody3D/Head" to="UI" method="_on_action_available"]
